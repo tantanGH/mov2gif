@@ -23,9 +23,7 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=20
     print(fourcc_int.to_bytes(4,'little'))
 
     # Convert the fourcc code to a human-readable format
-    #fourcc_str = cv2.VideoWriter_fourcc(*fourcc)
     fourcc_str = fourcc_int.to_bytes(4, 'little').decode('utf-8')
-    #fourcc_str = [chr((fourcc_int >> 8 * i) & 0xFF) for i in range(4)]
 
     # length in seconds
     length = total_frames / fps
