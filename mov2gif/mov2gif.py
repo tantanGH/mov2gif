@@ -3,7 +3,7 @@ import cv2
 
 from PIL import Image
 
-def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=200):
+def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50):
 
     # Open the movie file
     video = cv2.VideoCapture(movie_file_name)
@@ -74,7 +74,7 @@ def main():
     parser.add_argument("infile",help="input movie file (MP4/AVI)")
     parser.add_argument("outfile",help="output GIF file")
     parser.add_argument("-s","--resize",help="resize 1-100% (default:25)",type=int,default=25)
-    parser.add_argument("-d","--duration",help="duration time in msec (default:200)",type=int,default=200)
+    parser.add_argument("-d","--duration",help="duration time in msec (default:50)",type=int,default=50)
 
     args = parser.parse_args()
 
