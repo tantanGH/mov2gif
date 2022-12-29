@@ -20,7 +20,6 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=20
 
     # Retrieve the fourcc code of the video
     fourcc_int = int(video.get(cv2.CAP_PROP_FOURCC))
-    print(fourcc_int.to_bytes(4,'little'))
 
     # Convert the fourcc code to a human-readable format
     fourcc_str = fourcc_int.to_bytes(4, 'little').decode('utf-8')
@@ -60,7 +59,7 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=20
         else:
             break
 
-        print(".", end="")
+        print(".", end="", flush=True)
 
     video.release()
 
