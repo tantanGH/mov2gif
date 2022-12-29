@@ -1,9 +1,10 @@
 import argparse
 import cv2
+import sys
 
 from PIL import Image
 
-def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50):
+def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50,crop=None):
 
     # Open the movie file
     video = cv2.VideoCapture(movie_file_name)
@@ -54,8 +55,13 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50
                 raw_bytes_rgb[i*3+0] = raw_bytes[i*3+2]
                 raw_bytes_rgb[i*3+1] = raw_bytes[i*3+1]
                 raw_bytes_rgb[i*3+2] = raw_bytes[i*3+0]
-            im = Image.frombytes("RGB", (width, height), bytes(raw_bytes_rgb), decoder_name='raw')
-            images.append(im.resize(image_size).quantize(method=1,colors=256))
+            im = Image.frombytes("RGB", (width, height), bytes(raw_bytes_rgb), decoder_name='raw') \
+                      .resize(image_size).quantize(method=1,colors=256)
+            if crop is None:
+                images.append(im)
+            else:
+                images.append(im.crop(crop))
+
         else:
             break
 
@@ -74,9 +80,14 @@ def main():
     parser.add_argument("infile",help="input movie file (MP4/AVI)")
     parser.add_argument("outfile",help="output GIF file")
     parser.add_argument("-s","--resize",help="resize 1-100% (default:25)",type=int,default=25)
+    parser.add_argument("-c","--crop",help="crop image (x1,y1,x2,y2)",type=int, nargs='+')
     parser.add_argument("-d","--duration",help="duration time in msec (default:50)",type=int,default=50)
 
     args = parser.parse_args()
 
+    if args.crop is not None and len(args.crop) != 4:
+        print("crop options requires 4 parameters - x1,y1,x2,y2")
+        sys.exit(1)
+
     # execute conversion in script mode
-    convert_movie_to_gif( args.infile, args.outfile, args.resize, args.duration )
+    convert_movie_to_gif( args.infile, args.outfile, args.resize, args.duration, args.crop )
