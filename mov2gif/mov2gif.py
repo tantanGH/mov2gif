@@ -81,7 +81,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("infile",help="input movie file (MP4/AVI)")
     parser.add_argument("outfile",help="output GIF file")
-    parser.add_argument("-s","--resize",help="resize 1-100% (default:25)",type=int,default=25)
+    parser.add_argument("-r","--resize",help="resize 1-100% (default:25)",type=int,default=25)
     parser.add_argument("-c","--crop",help="crop image (x1,y1,x2,y2)",type=int, nargs=4)
     parser.add_argument("-d","--duration",help="duration time in msec (default:50)",type=int,default=50)
     parser.add_argument("-l","--loop",help="loop count (default:1) 0 ... endless",type=int)
