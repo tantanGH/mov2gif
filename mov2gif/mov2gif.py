@@ -4,7 +4,7 @@ import sys
 
 from PIL import Image
 
-def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50,crop=None):
+def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50,crop=None,loop=1):
 
     # Open the movie file
     video = cv2.VideoCapture(movie_file_name)
@@ -69,7 +69,7 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50
 
     video.release()
 
-    images[0].save(gif_file_name, format="gif", save_all=True, append_images=images[1:], duration=duration)
+    images[0].save(gif_file_name, format="gif", save_all=True, append_images=images[1:], duration=duration, loop=loop)
 
     print("Done.")
 
@@ -82,6 +82,7 @@ def main():
     parser.add_argument("-s","--resize",help="resize 1-100% (default:25)",type=int,default=25)
     parser.add_argument("-c","--crop",help="crop image (x1,y1,x2,y2)",type=int, nargs=4)
     parser.add_argument("-d","--duration",help="duration time in msec (default:50)",type=int,default=50)
+    parser.add_argument("-l","--loop",help="loop count (default:1) 0 ... endless",type=int)
 
     args = parser.parse_args()
 
@@ -90,4 +91,4 @@ def main():
         sys.exit(1)
 
     # execute conversion in script mode
-    convert_movie_to_gif( args.infile, args.outfile, args.resize, args.duration, args.crop )
+    convert_movie_to_gif( args.infile, args.outfile, args.resize, args.duration, args.crop, args.loop )
