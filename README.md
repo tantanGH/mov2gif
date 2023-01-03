@@ -5,6 +5,8 @@ MP4/AVI movie file to animated GIF file converter
 
     pip install git+https://github.com/tantanGH/mov2gif.git
 
+[Windowsユーザ向けPython導入ガイド](https://github.com/tantanGH/distribution/blob/main/windows_python_for_x68k.md)
+
 ### Usage
 
     mov2gif [options] <input-movie-file> <output-gif-file>
@@ -20,8 +22,3 @@ Input movie file can be .mp4 or .avi either.
         -t [frames]    ... trim last N frames (default:0)
 
 Note that you need to add mov2gif installed folder to your PATH environment variable.
-
-
-### Windowsユーザ向けPython導入ガイド
-
-[詳細な日本語での導入ガイド](https://github.com/tantanGH/distribution/blob/main/windows_python_for_x68k.md)
