@@ -42,6 +42,15 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50
 
     image_size = (width * resize_pct // 100, height * resize_pct // 100)
 
+    durations = []
+
+    if skip > 0:
+      for i in range(skip):
+        if(video.isOpened()):
+          ret, frame = video.read()        
+
+    n = 0
+
     while(video.isOpened()):
 
         # Read the next frame from the input file
@@ -62,16 +71,20 @@ def convert_movie_to_gif(movie_file_name,gif_file_name,resize_pct=25,duration=50
             else:
                 images.append(im.crop(crop))
 
+            durations.append(duration)
+
         else:
             break
 
         print(".", end="", flush=True)
 
+        n += 1
+        if trim > 0 and n >= ( total_frames - trim ):
+            break
+
     video.release()
 
-    cut_images = images[skip:-trim]
-
-    cut_images[0].save(gif_file_name, format="gif", save_all=True, append_images=cut_images[1:], duration=duration, loop=loop)
+    images[0].save(gif_file_name, format="gif", save_all=True, append_images=images[1:], duration=durations, loop=loop)
 
     print("Done.")
 
@@ -96,3 +109,7 @@ def main():
 
     # execute conversion in script mode
     convert_movie_to_gif( args.infile, args.outfile, args.resize, args.duration, args.crop, args.loop, args.skip, args.trim )
+
+
+if __name__ == "__main__":
+    main()
